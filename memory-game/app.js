@@ -111,7 +111,7 @@ function checkForMatch() {
         if (cardsWon.length == cardArray.length/2) {
             timeEnd = Date.now()
             let elapsedTime = timeEnd - timeStart
-            resultDisplay.textContent = ' Congratulations, you won!!!!!\r\n It took you ******'+elapsedTime/1000+' seconds****** \r\nReload the page to play again!'
+            resultDisplay.textContent = ' Congratulations, it took you ******'+elapsedTime/1000+' seconds****** \r\nReload the page to play again!'
         }
     // If it's not a match, then set back to blank and try again!!!
     } else {
