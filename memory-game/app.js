@@ -101,18 +101,20 @@ function checkForMatch() {
     const optionOneId = cardsChosenId[0]
     const optionTwoId = cardsChosenId[1]
     if (cardsChosen[0] === cardsChosen[1] && cardsChosenId[0] != cardsChosenId[1]) {
-        alert('You found a match!!!: ' + cardsChosen[0] + cardsWon.length)
+        // alert('You found a match!!!: ' + cardsChosen[0] + cardsWon.length)
         cards[optionOneId].setAttribute('src', 'images/white.png')
+        cards[optionOneId].removeAttribute('data-id')
         cards[optionTwoId].setAttribute('src', 'images/white.png')
+        cards[optionTwoId].removeAttribute('data-id')
         cardsWon.push(cardsChosen)
         // Update the Scoreboard
         resultDisplay.textContent = cardsWon.length
         if (cardsWon.length == cardArray.length/2) {
-            resultDisplay.textContent = 'Congratulations, you won!!!!!'
+            resultDisplay.textContent = ' Congratulations, you won!!!!!\r\nReload the page to play again!'
         }
     // If it's not a match, then set back to blank and try again!!!
     } else {
-        alert('No match, try again!!')
+        // alert('No match, try again!!')
         cards[optionOneId].setAttribute('src', 'images/blank.png')
         cards[optionTwoId].setAttribute('src', 'images/blank.png')
     }
