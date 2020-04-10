@@ -76,6 +76,8 @@ cardArray.sort(function (a, b) { return 0.5 - Math.random()})
 
 const grid = document.querySelector('.grid')
 const resultDisplay = document.querySelector('#result')
+var timeStart = ''
+var timeEnd = ''
 var cardsChosen = []
 var cardsChosenId = []
 var cardsWon = []
@@ -83,9 +85,6 @@ var cardsWon = []
 
 // Create the board
 function createBoard() {
-    
-
-
     for (let i = 0; i < cardArray.length; i++) {
         var card = document.createElement('img')
         card.setAttribute('src', 'images/blank.png')
@@ -110,7 +109,9 @@ function checkForMatch() {
         // Update the Scoreboard
         resultDisplay.textContent = cardsWon.length
         if (cardsWon.length == cardArray.length/2) {
-            resultDisplay.textContent = ' Congratulations, you won!!!!!\r\nReload the page to play again!'
+            timeEnd = Date.now()
+            let elapsedTime = timeEnd - timeStart
+            resultDisplay.textContent = ' Congratulations, you won!!!!!\r\n It took you ******'+elapsedTime/1000+' seconds****** \r\nReload the page to play again!'
         }
     // If it's not a match, then set back to blank and try again!!!
     } else {
@@ -125,6 +126,10 @@ function checkForMatch() {
 
 
 function flipCard() {
+    if (!timeStart) {
+        timeStart = Date.now()
+    }
+    
     var cardId = this.getAttribute('data-id') // You get the data-id from the card you have clicked on
     cardsChosen.push(cardArray[cardId].name)
     cardsChosenId.push(cardId)
