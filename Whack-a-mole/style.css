@@ -1,7 +1,21 @@
-,square {
+.grid {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+    width: 620px;
+}
+
+
+
+.square {
     display: flex;
     height: 200px;
     width: 200px;
     border-style: solid;
     border-width: 2px;
+}
+
+.mole {
+    background-image: url('mole.png');
+    background-size: cover;
 }
