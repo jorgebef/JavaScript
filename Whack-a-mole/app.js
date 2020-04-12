@@ -46,7 +46,7 @@ function countDown() {
     }
 }
 
-var timerId = setInterval(randomSquareSelector ,600);
+var timerId = setInterval(randomSquareSelector ,1200);
 
 let countDownTimer = setInterval(countDown, 1000);
 
