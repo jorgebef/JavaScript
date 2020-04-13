@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
     const grid = document.querySelector('.grid');
-    const scoreDisplay = document.querySelector('span');
+    const scoreDisplay = document.querySelector('.score span');
     const startBtn = document.querySelector('.start');
   
     let currentIndex = 0; //so first div in our grid
@@ -51,50 +51,38 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     
     function moveOutcomes() {
+        // If we hit the walls or eat ourself we stop the game
+        if (
+            (currentSnake[0] - width < 0 && direction === -width) ||
+            (currentSnake[0] + width > (height * width) && direction === width) ||
+            (currentSnake[0] % width === 0 && direction === -1) ||
+            (currentSnake[0] % width === (width - 1) && direction === 1) ||
+            (squares[currentSnake[0] + direction].classList.contains('snake'))
+            ){
+                clearInterval(interval);
+                alert('YOU LOST!!!!');
+            }
         
-        
-        
-        
-        // Regular movement
+        // move the head 1 space
         const tail = currentSnake.pop();
         squares[tail].classList.remove('snake');
         currentSnake.unshift(currentSnake[0] + direction);
+
+        // If we eat an apple we make it go a bit faster and we grow it
+        if (squares[currentSnake[0]].classList.contains('apple')) {
+            currentSnake.unshift(currentSnake[0]);
+            squares[appleIndex].classList.remove('apple');
+            currentSnake.forEach(snakeIndex => squares[snakeIndex].classList.add('snake'));
+            clearInterval(interval);
+            intervalTime *= 0.8;
+            score++;
+            scoreDisplay.innerText = score;
+            interval = setInterval(moveOutcomes, intervalTime);
+            randomApple();
+        }
         currentSnake.forEach(snakeIndex => squares[snakeIndex].classList.add('snake'));
     }
     
-
-    //function that deals with ALL the ove outcomes of the Snake
-    function moveOutcomes() {
-        //deals with snake hitting border and snake hitting self
-        if (
-            (currentSnake[0] + width >= (width * width) && direction === width ) || //if snake hits bottom
-            (currentSnake[0] % width === width -1 && direction === 1) || //if snake hits right wall
-            (currentSnake[0] % width === 0 && direction === -1) || //if snake hits left wall
-            (currentSnake[0] - width < 0 && direction === -width) ||  //if snake hits the top
-            (squares[currentSnake[0] + direction].classList.contains('snake')) //if snake goes into itself
-        ) {
-            return clearInterval(interval); //this will clear the interval if any of the above happen
-        }
-  
-        const tail = currentSnake.pop(); //removes last ite of the array and shows it
-        squares[tail].classList.remove('snake');  //removes class of snake from the TAIL
-        currentSnake.unshift(currentSnake[0] + direction); //gives direction to the head of the array
-  
-        //deals with snake getting apple
-        if(squares[currentSnake[0]].classList.contains('apple')) {
-            squares[currentSnake[0]].classList.remove('apple');
-            squares[tail].classList.add('snake');
-            currentSnake.push(tail);
-            randomApple();
-            score++;
-            scoreDisplay.textContent = score;
-            clearInterval(interval);
-            intervalTime = intervalTime * speed;
-            interval = setInterval(moveOutcomes, intervalTime);
-        }
-    squares[currentSnake[0]].classList.add('snake');
-    }
-
 
     function keypadControl(e) {
         if ((e.keyCode === 39) && (currentSnake[1] != currentSnake[0]+1)) {
@@ -116,11 +104,10 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
 
-    const controllerButtons = document.querySelectorAll('.controller button');
-    controllerButtons.forEach(button => {
-        button.addEventListener('click', buttonControl);
+    // Button implementation of the movement control
+    document.querySelectorAll('.controller button').forEach(button => {
+        button.addEventListener('click touchstart', buttonControl);
     })
-
     function buttonControl() {
         if ((this.classList.contains('right')) && (currentSnake[1] != currentSnake[0]+1)) {
             direction = 1;
