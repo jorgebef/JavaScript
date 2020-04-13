@@ -84,14 +84,25 @@ var cardsWon = [];
 
 
 // Create the board
+// function createBoard() {
+//     for (let i = 0; i < cardArray.length; i++) {
+//         var card = document.createElement('img');
+//         card.setAttribute('src', 'images/blank.png');
+//         card.setAttribute('data-id', i);
+//         grid.appendChild(card);
+//         card.addEventListener('click', flipCard); // When you click, it calls the function flipCard
+//     }
+// }
 function createBoard() {
-    for (let i = 0; i < cardArray.length; i++) {
+    let i = 0;
+    cardArray.forEach(() => {
         var card = document.createElement('img');
         card.setAttribute('src', 'images/blank.png');
         card.setAttribute('data-id', i);
         grid.appendChild(card);
         card.addEventListener('click', flipCard); // When you click, it calls the function flipCard
-    }
+        i++;
+    });
 }
 
 
