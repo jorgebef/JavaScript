@@ -18,3 +18,29 @@
 .grid .apple {
     background-color: orange;
 }
+
+.controller {
+    width: 200px;
+    height: 200px;
+}
+
+.controller .up {
+    width: 100%;
+    height: 30%;
+    margin: 5px;
+}
+.controller .left {
+    width: 44%;
+    height: 30%;
+    margin: 5px;
+}
+.controller .right {
+    width: 44%;
+    height: 30%;
+    margin: 5px;
+}
+.controller .down {
+    width: 100%;
+    height: 30%;
+    margin: 5px;
+}

@@ -93,81 +93,55 @@ document.addEventListener('DOMContentLoaded', () => {
             interval = setInterval(moveOutcomes, intervalTime);
         }
     squares[currentSnake[0]].classList.add('snake');
-}
-
-
-
-
-function control(e) {
-    if ((e.keyCode === 39) && (currentSnake[1] != currentSnake[0]+1)) {
-        // press right arrow and it's not coming from the right, add 1 to the position
-        direction = 1;
     }
-    else if ((e.keyCode === 37) && (currentSnake[1] != currentSnake[0]-1)) {
-        // press left arrow and it's not coming from the right, add 1 to the position
-        direction = -1;
-    }
-    else if ((e.keyCode === 40) && (currentSnake[1] != currentSnake[0]+width)) {
-        // press down arrow and it's not coming from the top, add 1 to the position
-        direction = width;
-    }
-    else if ((e.keyCode === 38) && (currentSnake[1] != currentSnake[0]-width)) {
-        // press up arrow and it's not coming from the bottom, add 1 to the position
-        direction = -width;
-    }
-}
 
 
-    document.addEventListener('keyup', control);
-
-
-    // Swipe support -----------------------------------------------
-    let touchstartX = 0;
-    let touchstartY = 0;
-    let touchendX = 0;
-    let touchendY = 0;
-    
-    // const gestureZone = document.getElementById('gestureZone');
-    
-    document.addEventListener('touchstart', function(event) {
-        touchstartX = event.changedTouches[0].screenX;
-        touchstartY = event.changedTouches[0].screenY;
-    }, false);
-    
-    document.addEventListener('touchend', function(event) {
-        touchendX = event.changedTouches[0].screenX;
-        touchendY = event.changedTouches[0].screenY;
-        handleGesture();
-    }, false); 
-    
-    function handleGesture() {
-        // Swipe left
-        if (touchendX <= touchstartX) {
-            console.log('Swiped left');
-            direction = -1;
-        }
-        
-        if (touchendX >= touchstartX) {
-            console.log('Swiped right');
+    function keypadControl(e) {
+        if ((e.keyCode === 39) && (currentSnake[1] != currentSnake[0]+1)) {
+            // press right arrow and it's not coming from the right, add 1 to the position
             direction = 1;
         }
-        
-        if (touchendY <= touchstartY) {
-            console.log('Swiped up');
+        else if ((e.keyCode === 37) && (currentSnake[1] != currentSnake[0]-1)) {
+            // press left arrow and it's not coming from the right, add 1 to the position
+            direction = -1;
+        }
+        else if ((e.keyCode === 40) && (currentSnake[1] != currentSnake[0]+width)) {
+            // press down arrow and it's not coming from the top, add 1 to the position
             direction = width;
         }
-        
-        if (touchendY >= touchstartY) {
-            console.log('Swiped down');
+        else if ((e.keyCode === 38) && (currentSnake[1] != currentSnake[0]-width)) {
+            // press up arrow and it's not coming from the bottom, add 1 to the position
             direction = -width;
-        }
-        
-        if (touchendY === touchstartY) {
-            console.log('Tap');
         }
     }
 
 
+    const controllerButtons = document.querySelectorAll('.controller button');
+    controllerButtons.forEach(button => {
+        button.addEventListener('click', buttonControl);
+    })
+
+    function buttonControl() {
+        if ((this.classList.contains('right')) && (currentSnake[1] != currentSnake[0]+1)) {
+            direction = 1;
+        }
+        else if ((this.classList.contains('left')) && (currentSnake[1] != currentSnake[0]-1)) {
+            // press left arrow and it's not coming from the right, add 1 to the position
+            direction = -1;
+        }
+        else if ((this.classList.contains('down')) && (currentSnake[1] != currentSnake[0]+width)) {
+            // press down arrow and it's not coming from the top, add 1 to the position
+            direction = width;
+        }
+        else if ((this.classList.contains('up')) && (currentSnake[1] != currentSnake[0]-width)) {
+            // press up arrow and it's not coming from the bottom, add 1 to the position
+            direction = -width;
+        }
+    }
+
+       
+    document.addEventListener('keyup', keypadControl);
 
     startBtn.addEventListener('click', startGame);
-  })
+
+})
